@@ -1,5 +1,6 @@
 from django import forms
 from .models import ShippingAddress
+from paypal.standard.forms import PayPalPaymentsForm
 
 class ShippingForm(forms.ModelForm):
 	shipping_full_name = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Full Name'}), required=True)

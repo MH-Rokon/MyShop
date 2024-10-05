@@ -1,6 +1,9 @@
 
 from pathlib import Path
 import os
+
+PORT = os.environ.get('PORT', 8000)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,7 +12,8 @@ import dj_database_url
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)_1tgnrxg7h&uj1b!ih(=7@=t74+x%j=r7ydt$iyqceti2e*l('
+# SECRET_KEY = 'django-insecure-)_1tgnrxg7h&uj1b!ih(=7@=t74+x%j=r7ydt$iyqceti2e*l('
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-)_1tgnrxg7h&uj1b!ih(=7@=t74+x%j=r7ydt$iyqceti2e*l(')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -135,5 +139,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-PAYPAL_RECEIVER_EMAIL = 'rokonrokon74805@gmail.com.com'
+PAYPAL_RECEIVER_EMAIL = 'rokonrokon74805@gmail.com'
+
 PAYPAL_TEST = True 
