@@ -99,7 +99,7 @@ python-decouple
 python-Levenshtein
 python3-openid
 pytz
-pywin32
+# pywin32
 pyzmq
 RapidFuzz
 requests
