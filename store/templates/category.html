@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder" style="color: #ff69b4;">{{ category.name }}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Here are our products</p>
+        </div>
+    </div>
+</header>
+
+<!-- Products Section -->
+<section class="py-5" style="background-color: #f9f0ff;"> <!-- Light pink background -->
+    <div class="container px-4 px-lg-5 mt-4">
+        <h2 class="text-center mb-4" style="color: #a2006c;">Featured Products</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for p in products %}
+            <div class="col mb-4">
+                <div class="card h-100 shadow-sm border-0" style="border-radius: 10px; overflow: hidden; transition: transform 0.3s; background-color: #fff;">
+                    {% if p.is_sale %}
+                    <div class="badge bg-danger text-white position-absolute" style="top:0.5rem; right:0.5rem; border-radius: 5px;">Sale</div>
+                    {% endif %}
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{ p.image.url }}" alt="{{ p.name }}" style="object-fit: cover; height: 50%; width: 100%;" />
+                    <!-- Product details-->
+                    <div class="card-body p-3 text-center">
+                        <h5 class="fw-bolder" style="color: #ff69b4;">{{ p.name }}</h5> <!-- Pink color for product name -->
+                        {% if p.is_sale %}
+                        <p class="text-warning">⭐ Sale ⭐</p>
+                        <strike class="text-muted">${{ p.price }}</strike><br>
+                        <span class="text-danger fw-bold">${{ p.sale_price }}</span>
+                        {% else %}
+                        <p class="text-dark fw-bold">${{ p.price }}</p>
+                        {% endif %}
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <a class="btn" href="{% url 'product' p.id %}" style="background-color: #ff5e57; color: white; border-radius: 20px; transition: background-color 0.3s;">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+    
+{% endblock %}

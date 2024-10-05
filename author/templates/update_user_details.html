@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Profile </h1>
+            <p class="lead fw-normal text-white-50 mb-0">Welcome Chief to your profile</p>
+        </div>
+    </div>
+</header>
+
+<div class="d-flex justify-content-center align-items-center my-5">
+    <!-- Card that holds the profile form -->
+    <div class="card p-4" style="width: 400px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+        <div class="card-body">
+            <!-- Form Title -->
+            <h3 class="text-center mb-4">Update Profile</h3>
+            <form action="." method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100 mt-3">Update Profile</button>
+                <a href="{% url 'changepassword'%}" class="link-success">Change Password</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

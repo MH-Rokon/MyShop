@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Slideshow Section -->
+<div id="carouselExample" class="carousel slide" data-bs-interval="1000" data-bs-ride="carousel" style="margin-bottom: 20px;">
+    <div class="carousel-inner">
+        {% for category in cat %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{category.image.url }}" class="d-block w-100" alt="{{ category.name }}" style="height: 400px; object-fit: cover; filter: brightness(0.9);">
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: rgba(255, 165, 0, 0.7);"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: rgba(255, 165, 0, 0.7);"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<section class="py-5" style="background-color: #f8f0ff;">
+    <div class="container">
+        <h2 class="text-left mb-4" style="color: #a2006c;">Categories</h2>
+        <div class="row gx-0">
+            {% for category in cat %}
+            <div class="col-lg-2 col-md-3 col-sm-4 mb-4"> 
+                <a href="{% url 'category' category.name %}" class="text-decoration-none text-center">
+                    <div class="card border-0" style="background-color: #ffffff; transition: transform 0.3s; padding: 15px;">
+                        <div class="d-flex justify-content-center mb-3">
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}" style="width: 80px; height: 80px; object-fit: cover;" />
+                        </div>
+                        <h6 class="card-title" style="color: #a2006c;">{{ category.name }}</h6>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5" style="background-color: #ffffff;">
+    <div class="container px-4 px-lg-5 mt-4">
+        <h2 class="text-left mb-4" style="color: #a2006c;">Featured Products</h2>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for p in products %}
+            <div class="col mb-4">
+                <div class="card h-100 shadow-sm border-0" style="background-color: #f8f0ff; transition: transform 0.3s; overflow: hidden;">
+                    {% if p.is_sale %}
+                    <div class="badge bg-warning text-dark position-absolute" style="top:10px; right:10px; border-radius: 5px;">Sale</div>
+                    {% endif %}
+                    <!-- Product image -->
+                    <img class="card-img-top" src="{{ p.image.url }}" alt="{{ p.name }}" style="object-fit: cover; height: 150px;" />
+                    <!-- Product details -->
+                    <div class="card-body text-center" style="padding: 0;">
+                        <h6 class="fw-bolder" style="color: #a2006c; margin-top: 10px;">{{ p.name }}</h6>
+                        {% if p.is_sale %}
+                        <p class="text-danger fw-bold">${{ p.sale_price }}</p>
+                        <strike class="text-muted">${{ p.price }}</strike>
+                        {% else %}
+                        <p class="text-dark fw-bold">${{ p.price }}</p>
+                        {% endif %}
+                    </div>
+                    <!-- Product actions -->
+                    <div class="card-footer text-center" style="background-color: transparent;">
+                        <a class="btn" href="{% url 'product' p.id %}" style="border-radius: 20px; background-color: #ff69b4; color: white; transition: background-color 0.3s;">View Product</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CSS for hover effects -->
+<style>
+    .card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    }
+
+    .carousel-item img {
+        filter: brightness(0.9); 
+    }
+
+    .card-body h6 {
+        font-size: 1rem;
+        margin: 10px 0;
+    }
+
+    /* Custom button styling */
+    .btn {
+        border: none; 
+    }
+
+    .btn:hover {
+        background-color: #ff4c3b; /* Darker pink on hover */
+    }
+</style>
+
+{% endblock %}

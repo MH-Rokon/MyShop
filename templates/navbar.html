@@ -1,0 +1,67 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg" style="background-color: #ffffff; border-bottom: 1px solid #eaeaea;">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="{% url 'home' %}" style="color: #000000;">
+            <img  src="{% static 'logo.png' %}"  alt="Shop Logo" style="height: 40px; margin-right: 10px;">
+            My Shop
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="align-items: center;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}" style="color: #000000; padding: 10px 15px;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'search' %}" style="color: #000000; padding: 10px 15px;">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}" style="color: #000000; padding: 10px 15px;">About</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #000000; padding: 10px 15px;">My Profile</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #ffffff;">
+                        <li><a class="dropdown-item" href="{% url 'update_user_info' %}" style="color: #000000;">Information</a></li>
+                        <li><a class="dropdown-item" href="{% url 'update_profile' %}" style="color: #000000;">Profile</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="shopDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #000000; padding: 10px 15px;">Shop</a>
+                    <ul class="dropdown-menu" aria-labelledby="shopDropdown" style="background-color: #ffffff;">
+                        <li><a class="dropdown-item" href="{% url 'home' %}" style="color: #000000;">All Products</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        {% for c in cat %}
+                        <li><a class="dropdown-item" href="{% url 'category' c.name %}" style="color: #000000;">{{ c.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="btn" href="{% url 'cart_summary' %}" style="color: #000000; border: 1px solid #000000; background-color: #ffffff; padding: 5px 10px; margin-left: 10px;">
+                        <i class="bi bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-danger text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}" style="color: #000000; padding: 10px 15px;">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}" style="color: #000000; padding: 10px 15px;">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}" style="color: #000000; padding: 10px 15px;">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

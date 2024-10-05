@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Product Detail Header -->
+<header class="bg-dark text-white py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center">
+            <h1 class="display-4 fw-bolder" style="color: #ff69b4;">{{ product.name }}</h1> <!-- Pink color -->
+        </div>
+    </div>
+</header>
+
+<!-- Product Detail Section -->
+<section class="py-5" style="background-color: #f9f0ff;"> <!-- Light pink background -->
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <img class="img-fluid rounded border" src="{{ product.image.url }}" alt="{{ product.name }}" />
+            </div>
+            <div class="col-lg-6">
+                <h2 class="fw-bolder" style="color: #a2006c;">{{ product.name }}</h2> <!-- Purple color -->
+                <p class="lead">{{ product.description }}</p>
+                {% if product.is_sale %}
+                    <p class="text-danger fs-4 fw-bold">Sale Price: ${{ product.sale_price }}</p>
+                    <p class="text-muted"><strike>Original Price: ${{ product.price }}</strike></p>
+                {% else %}
+                    <p class="text-primary fs-4 fw-bold">Price: ${{ product.price }}</p>
+                {% endif %}
+                <br />
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-secondary me-2" onclick="changeValue(-1)" style="background-color: #ff5e57; color: white;">-</button> <!-- Orange color -->
+                    <select id="qty-cart" class="form-select" style="width: 100px; display: inline-block;">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <button class="btn btn-secondary ms-2" onclick="changeValue(1)" style="background-color: #ff5e57; color: white;">+</button> <!-- Orange color -->
+                </div>
+                <br />
+                <button type="button" data-product-id="{{ product.id }}" class="btn" id="add-cart" style="background-color: #ff69b4; color: white;">Add to Cart</button> <!-- Pink color -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+<!-- Cart Summary Button -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function changeValue(direction) {
+        var qtySelect = document.getElementById("qty-cart");
+        var qty = parseInt(qtySelect.value);
+        qty = isNaN(qty) ? 1 : qty;  
+
+        if (direction === 1 && qty < 5) {
+            qty += 1;
+        } else if (direction === -1 && qty > 1) {
+            qty -= 1;
+        }
+        qtySelect.value = qty;
+    }
+
+    // Check if button pressed
+    $(document).on('click', '#add-cart', function(e) {
+        e.preventDefault();
+        
+        let product_id = $(this).data('product-id');
+        let product_qty = $('#qty-cart option:selected').val(); // Get selected value, not text
+        $(this).prop('disabled', true); // Disable button to prevent multiple clicks
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_add" %}',
+            data: {
+                product_id: product_id,
+                product_qty: product_qty,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                document.getElementById("cart_quantity").textContent = json.qty;
+                $('#add-cart').prop('disabled', false); // Re-enable the button
+                alert("Product added to cart!"); // Simple feedback, you can customize this
+            },
+            error: function(xhr, errmsg, err) {
+                console.error('Error:', errmsg);
+                $('#add-cart').prop('disabled', false); // Re-enable the button in case of error
+                alert("Error adding product to cart.");
+            }
+        });
+    });
+</script>
+
+{% endblock %}

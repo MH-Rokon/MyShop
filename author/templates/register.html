@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Center the card in the middle of the page using Flexbox -->
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <!-- Card that holds the registration form -->
+    <div class="card p-4" style="width: 400px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+        <div class="card-body">
+            <!-- Form Title -->
+            <h3 class="text-center mb-4">Sign Up</h3>
+
+            <!-- Registration Form -->
+            <form method="POST">
+                {% csrf_token %}
+                
+                <!-- Username -->
+                <div class="form-group mb-3">
+                    <input type="text" id="id_username" name="username" placeholder="Enter your username" class="form-control" required>
+                </div>
+
+                <!-- First Name -->
+                <div class="form-group mb-3">
+                    <input type="text" id="id_first_name" name="first_name" placeholder="Enter your first name" class="form-control" required>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group mb-3">
+                    <input type="text" id="id_last_name" name="last_name" placeholder="Enter your last name" class="form-control" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group mb-3">
+                    <input type="email" id="id_email" name="email" placeholder="Enter your email" class="form-control" required>
+                </div>
+
+                <!-- Password1 -->
+                <div class="form-group mb-3 position-relative">
+                    <input type="password" id="id_password1" name="password1" placeholder="Create a password" class="form-control" required>
+                    <span class="toggle-password" onclick="togglePassword('id_password1')" style="position: absolute; right: 10px; top: 12px; cursor: pointer; color: black;">👁️</span>
+                </div>
+
+                <!-- Password2 -->
+                <div class="form-group mb-4 position-relative">
+                    <input type="password" id="id_password2" name="password2" placeholder="Confirm your password" class="form-control" required>
+                    <span class="toggle-password" onclick="togglePassword('id_password2')" style="position: absolute; right: 10px; top: 12px; cursor: pointer; color: black;">👁️</span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+    }
+</script>
+
+{% endblock %}

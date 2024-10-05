@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Header -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Update Info</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Update User Info...</p>
+        </div>
+    </div>
+</header>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius: 15px;">
+                <strong class="text-primary">Billing Information</strong>
+                <form method="POST" action="{% url 'update_profile' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary mt-3" style="border-radius: 20px;">Update Profile</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius: 15px;">
+                <strong class="text-primary">Shipping Information</strong>
+                <form method="POST" action="{% url 'update_profile' %}">
+                    {% csrf_token %}
+                    {{ shipping_form.as_p }}
+                    <button type="submit" class="btn btn-primary mt-3" style="border-radius: 20px;">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS for additional styling -->
+<style>
+    header {
+        background: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card {
+        background: #f9f9f9;
+        border: 1px solid #e1e1e1;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    strong {
+        color: #007bff; /* Primary color for strong text */
+    }
+</style>
+
+{% endblock %}
