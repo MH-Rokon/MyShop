@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-)_1tgnrxg7h&uj1b!ih(=7@=t74+x%j=r7ydt$iyqceti2e*l(
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://ice-student.onrender.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://myshop-j7us.onrender.com','https://*.127.0.0.1']
        
 
 # Application definition
