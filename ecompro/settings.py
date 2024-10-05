@@ -4,7 +4,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+import dj_database_url
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -14,8 +14,9 @@ SECRET_KEY = 'django-insecure-)_1tgnrxg7h&uj1b!ih(=7@=t74+x%j=r7ydt$iyqceti2e*l(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://ice-student.onrender.com','https://*.127.0.0.1']
+       
 
 # Application definition
 
@@ -73,13 +74,17 @@ WSGI_APPLICATION = 'ecompro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://myshop_kp0k_user:XU1HJQws1wvtpqW2WMsZ0DAAfBJsMaaT@dpg-cs0mbei3esus7395f360-a.oregon-postgres.render.com/myshop_kp0k',
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
